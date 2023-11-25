@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserMapper">
+    <select id="findAll" resultType="com.example.demo.entity.User">
+        SELECT * FROM dt_pro.db_user WHERE isVisible = '1'
+    </select>
+    <update id="update">
+        update dt_pro.db_user
+        <set>
+            <if test="userName != null">
+                userName = #{userName}
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <delete id="delete">
+        update dt_pro.db_user
+        <set>
+            <if test="id != 0">
+                isVisible = '0'
+            </if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </delete>
+    <select id="findByPage" resultType="com.example.demo.entity.User">
+        SELECT * FROM dt_pro.db_user WHERE isVisible = '1' LIMIT #{pageNum},#{pageSize}
+    </select>
+    <select id="selectTotal">
+        SELECT Count(*) FROM dt_pro.db_user WHERE isVisible = '1'
+    </select>
+</mapper>
